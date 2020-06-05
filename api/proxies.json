@@ -1,0 +1,29 @@
+{
+	"$schema": "http://json.schemastore.org/proxies",
+	"proxies": {
+		"heartcore-cdn": {
+			"matchCondition": {
+				"methods": [ "GET", "OPTIONS", "POST" ],
+				"route": "/api/{*restOfPath}"
+			},
+			"backendUri": "https://cdn.umbraco.io/{restOfPath}",
+			"requestOverrides": {
+				"backend.request.headers.Accept": "application/json",
+				"backend.request.headers.Api-Key": "%UMBRACO__DELIVERY_API_KEY%",
+				"backend.request.headers.Umb-Project-Alias": "%UMBRACO__PROJECT_ALIAS%"
+			}
+		},
+		"heartcore-api": {
+			"matchCondition": {
+				"methods": [ "DELETE", "GET", "OPTIONS", "POST", "PUT" ],
+				"route": "/api/management/{*restOfPath}"
+			},
+			"backendUri": "https://api.umbraco.io/{restOfPath}",
+			"requestOverrides": {
+				"backend.request.headers.Accept": "application/json",
+				"backend.request.headers.Api-Key": "%UMBRACO__MANAGEMENT_API_KEY%",
+				"backend.request.headers.Umb-Project-Alias": "%UMBRACO__PROJECT_ALIAS%"
+			}
+		}
+	}
+}
